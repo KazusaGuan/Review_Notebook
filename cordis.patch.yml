@@ -1,0 +1,5 @@
+- insert:
+    - id: review-notes
+      name: '@local/dsh-review-notes'
+      config:
+        dataDir: 'D:/文档/电路理论'

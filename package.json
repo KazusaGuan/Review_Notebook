@@ -1,0 +1,32 @@
+{
+  "name": "@local/dsh-review-notes",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Subject-named review notebooks with paged notes: paste a screenshot and attach a one-sentence summary.",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "store.js",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": false,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  }
+}
