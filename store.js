@@ -8,10 +8,18 @@
  */
 import { randomUUID } from 'node:crypto'
 import { mkdir, readFile, readdir, rename, stat, unlink, writeFile } from 'node:fs/promises'
+import { homedir } from 'node:os'
 import { isAbsolute, join, resolve } from 'node:path'
 
-/** Default directory holding the review-notes document. */
-export const DEFAULT_DATA_DIR = 'D:/文档/电路理论'
+/**
+ * Default directory holding the review-notes document. `DSH_HOME` moves the
+ * base for custom DSH installations; otherwise it sits beside the profiles in
+ * `~/.dsh`.
+ */
+export const DEFAULT_DATA_DIR = join(
+  process.env.DSH_HOME && process.env.DSH_HOME.trim() ? resolve(process.env.DSH_HOME.trim()) : join(homedir(), '.dsh'),
+  'review-notes',
+)
 /** Stored document version. */
 export const STATE_VERSION = 1
 /** Largest accepted image upload. */

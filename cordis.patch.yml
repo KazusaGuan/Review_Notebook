@@ -1,5 +1,8 @@
 - insert:
     - id: review-notes
       name: '@local/dsh-review-notes'
-      config:
-        dataDir: 'D:/文档/电路理论'
+      # Optional: use a custom absolute data directory for this deployment.
+      # Without config, the plugin stores data under
+      # <DSH_HOME or ~/.dsh>/review-notes.
+      # config:
+      #   dataDir: 'D:/path/to/review-notes'

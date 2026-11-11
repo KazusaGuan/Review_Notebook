@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { mkdtemp, readFile, rm, utimes, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { after, before, test } from 'node:test'
 import {
   DEFAULT_DATA_DIR,
@@ -15,6 +15,7 @@ import {
 } from '../store.js'
 
 const PNG_HEADER = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0])
+const ABSOLUTE_DIR = process.platform === 'win32' ? 'D:/notes' : '/tmp/notes'
 
 let root
 
@@ -117,9 +118,9 @@ test('imageExtension validates the declared media type against the bytes', () =>
 })
 
 test('resolveDataDir honors the configured directory and rejects bad values', () => {
-  assert.equal(resolveDataDir({}), DEFAULT_DATA_DIR.replace(/\//g, '\\'))
-  assert.equal(resolveDataDir({ dataDir: 'D:/文档/电路理论' }), 'D:\\文档\\电路理论')
-  assert.equal(resolveDataDir({ dataDir: '  D:/notes  ' }), 'D:\\notes')
+  assert.equal(resolveDataDir({}), resolve(DEFAULT_DATA_DIR))
+  assert.equal(resolveDataDir({ dataDir: ABSOLUTE_DIR }), resolve(ABSOLUTE_DIR))
+  assert.equal(resolveDataDir({ dataDir: `  ${ABSOLUTE_DIR}  ` }), resolve(ABSOLUTE_DIR))
   assert.throws(() => resolveDataDir({ dataDir: '' }), /dataDir 必须是非空字符串/)
   assert.throws(() => resolveDataDir({ dataDir: 42 }), /dataDir 必须是非空字符串/)
   assert.throws(() => resolveDataDir({ dataDir: 'relative/notes' }), /dataDir 必须是绝对路径/)
