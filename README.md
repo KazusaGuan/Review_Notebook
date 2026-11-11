@@ -59,6 +59,7 @@ DeepSeek Harness 的复习笔记插件：按科目建笔记本，每个笔记本
 - Git 可用；手动部署还需要 `pnpm`（或使用 AI 部署让 DSH 的 plugin_manager 处理依赖）。
 - 建议把仓库克隆到用户目录，例如 `~/dsh-plugins/Review_Notebook`（Windows：`%USERPROFILE%\dsh-plugins\Review_Notebook`），不要放进 DSH 安装目录。
 - 插件是普通本地 bundle，没有构建步骤；克隆后即可安装。
+- 本地插件会在 DSH Host 进程中执行，并可读写你配置的数据目录；只安装你信任的源码，安装前可先检查 `index.js` / `store.js` / `client.js`。
 
 ### AI 一键部署（推荐）
 
