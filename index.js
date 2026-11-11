@@ -130,14 +130,19 @@ async function imageFileRoute(store, req, res) {
 }
 
 /**
- * Mount the review-notes routes on the dsh web server. Without a web server
- * (headless assemblies) the plugin contributes nothing.
+ * Cordis host injection: the HTTP routes can only be registered after the web
+ * carrier service exists. Declaring the injection makes the Loader wait for
+ * `webServer` instead of applying early and silently skipping the routes.
+ */
+export const inject = ['webServer']
+
+/**
+ * Mount the review-notes routes on the dsh web server.
  * @param {object} ctx - cordis context of this Loader entry.
  * @param {unknown} config - row config; `dataDir` overrides the default folder.
  */
 export function apply(ctx, config) {
-  const web = ctx.get('webServer')
-  if (!web) return
+  const web = ctx.webServer
   const store = new ReviewNotesStore(resolveDataDir(config))
   ctx.effect(() => web.register({
     kind: 'exact',
